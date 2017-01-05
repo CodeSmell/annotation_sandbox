@@ -19,7 +19,8 @@ public class FooBarAnnotationRuntimeHandler {
 		classesInPackage.stream()
 			.map(classInfo -> loadClass(classInfo))
 			.map(klass -> fooBarMethods(klass))
-			.flatMap(List::stream).forEach(fooBarInfo -> {
+			.flatMap(List::stream)
+			.forEach(fooBarInfo -> {
 				fooBarInfo.invoke();
 			});
 	}
