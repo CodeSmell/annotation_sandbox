@@ -2,9 +2,8 @@ package codesmell.annotation.handler;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.google.common.reflect.ClassPath;
 
@@ -17,9 +16,12 @@ public class FooBarAnnotationRuntimeHandler {
 		ClassLoader cl = getClass().getClassLoader();
 		Set<ClassPath.ClassInfo> classesInPackage = ClassPath.from(cl).getTopLevelClassesRecursive("codesmell");
 		classesInPackage.stream()
+			// turn stream of ClassInfo into a stream of Class
 			.map(classInfo -> loadClass(classInfo))
-			.map(klass -> fooBarMethods(klass))
-			.flatMap(List::stream)
+			// turn stream of Class into stream of FooBarHolders
+			// using flatMap to avoid stream of stream of FooBarHolders
+			.flatMap(klass -> fooBarMethods(klass))
+			// invoke the annotated method
 			.forEach(fooBarInfo -> {
 				fooBarInfo.invoke();
 			});
@@ -36,12 +38,11 @@ public class FooBarAnnotationRuntimeHandler {
 		return klass;
 	}
 
-	public List<FooBarHolder> fooBarMethods(Class klass) {
+	public Stream<FooBarHolder> fooBarMethods(Class klass) {
 		Method[] methods = klass.getMethods();
 		return Arrays.stream(methods)
 				.filter(method -> method.isAnnotationPresent(FooBar.class))
-				.map(method -> new FooBarHolder(klass, method))
-				.collect(Collectors.toList());
+				.map(method -> new FooBarHolder(klass, method));
 	}
 
 	public final class FooBarHolder {
