@@ -1,4 +1,4 @@
-package codesmell;
+package codesmell.annotation.handler;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -6,16 +6,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.junit.Test;
-
 import com.google.common.reflect.ClassPath;
 
 import codesmell.annotation.FooBar;
 
-public class AnnotationRuntimeHandler {
+public class FooBarAnnotationRuntimeHandler {
 
-	@Test
-	public void test() throws Exception {
+	public void annotationProcess() throws Exception {
 		// find the class w/ an annotation
 		ClassLoader cl = getClass().getClassLoader();
 	    Set<ClassPath.ClassInfo> classesInPackage = ClassPath.from(cl).getTopLevelClassesRecursive("codesmell");
