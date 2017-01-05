@@ -30,4 +30,4 @@ This should result in a list of the classes that have methods annotated with `Fo
 
 
 ### Run Time processing
-There is also a handler that uses Reflection to analyze classes at runtime. The current handler, `FooBarAnnotationRuntimeHandler` looks for all classes in the classpath that have a method annotated with `FooBar` and invokes the method. The current handler assumes that the classes with have a default constructor and that the method annotated with `FooBar` does not have any arguments.  
+There is also a handler that uses Reflection to analyze classes at runtime. The current handler, `FooBarAnnotationRuntimeHandler` looks for all classes in the classpath that have a method annotated with `FooBar` and invokes the method. The current handler assumes that the classes will have a default constructor and that the method annotated with `FooBar` does not have any arguments.  
